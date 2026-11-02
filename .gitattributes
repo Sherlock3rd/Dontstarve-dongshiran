@@ -1,0 +1,2 @@
+# Preserve imported runtime bytes, including mixed historical line endings.
+* -text

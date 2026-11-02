@@ -1,0 +1,268 @@
+{
+  "version": "1.3.3",
+  "lua_files_compiled": 25,
+  "changed_files": [
+    "modinfo.lua",
+    "modmain.lua"
+  ],
+  "tests": [
+    {
+      "case": "native modinfo sandbox en",
+      "passed": true
+    },
+    {
+      "case": "native modinfo sandbox zh",
+      "passed": true
+    },
+    {
+      "case": "native modinfo sandbox zht",
+      "passed": true
+    },
+    {
+      "case": "native modinfo sandbox schinese",
+      "passed": true
+    },
+    {
+      "case": "missing",
+      "pressed": 120,
+      "down": false,
+      "chat_open": false,
+      "expected": [
+        1,
+        true,
+        false
+      ],
+      "passed": true
+    },
+    {
+      "case": "missing",
+      "pressed": 122,
+      "down": false,
+      "chat_open": false,
+      "expected": [
+        1,
+        false,
+        true
+      ],
+      "passed": true
+    },
+    {
+      "case": "missing",
+      "pressed": 120,
+      "down": true,
+      "chat_open": false,
+      "expected": [
+        0,
+        false,
+        false
+      ],
+      "passed": true
+    },
+    {
+      "case": "missing",
+      "pressed": 102,
+      "down": false,
+      "chat_open": false,
+      "expected": [
+        0,
+        false,
+        false
+      ],
+      "passed": true
+    },
+    {
+      "case": "missing",
+      "pressed": 120,
+      "down": false,
+      "chat_open": true,
+      "expected": [
+        0,
+        false,
+        false
+      ],
+      "passed": true
+    },
+    {
+      "case": "legacy Z",
+      "pressed": 120,
+      "down": false,
+      "chat_open": false,
+      "expected": [
+        1,
+        true,
+        false
+      ],
+      "passed": true
+    },
+    {
+      "case": "legacy Z",
+      "pressed": 122,
+      "down": false,
+      "chat_open": false,
+      "expected": [
+        1,
+        false,
+        true
+      ],
+      "passed": true
+    },
+    {
+      "case": "legacy Z",
+      "pressed": 120,
+      "down": true,
+      "chat_open": false,
+      "expected": [
+        0,
+        false,
+        false
+      ],
+      "passed": true
+    },
+    {
+      "case": "legacy Z",
+      "pressed": 102,
+      "down": false,
+      "chat_open": false,
+      "expected": [
+        0,
+        false,
+        false
+      ],
+      "passed": true
+    },
+    {
+      "case": "legacy Z",
+      "pressed": 120,
+      "down": false,
+      "chat_open": true,
+      "expected": [
+        0,
+        false,
+        false
+      ],
+      "passed": true
+    },
+    {
+      "case": "X",
+      "pressed": 120,
+      "down": false,
+      "chat_open": false,
+      "expected": [
+        1,
+        true,
+        false
+      ],
+      "passed": true
+    },
+    {
+      "case": "X",
+      "pressed": 122,
+      "down": false,
+      "chat_open": false,
+      "expected": [
+        1,
+        false,
+        true
+      ],
+      "passed": true
+    },
+    {
+      "case": "X",
+      "pressed": 120,
+      "down": true,
+      "chat_open": false,
+      "expected": [
+        0,
+        false,
+        false
+      ],
+      "passed": true
+    },
+    {
+      "case": "X",
+      "pressed": 102,
+      "down": false,
+      "chat_open": false,
+      "expected": [
+        0,
+        false,
+        false
+      ],
+      "passed": true
+    },
+    {
+      "case": "X",
+      "pressed": 120,
+      "down": false,
+      "chat_open": true,
+      "expected": [
+        0,
+        false,
+        false
+      ],
+      "passed": true
+    },
+    {
+      "case": "custom Y",
+      "pressed": 121,
+      "down": false,
+      "chat_open": false,
+      "expected": [
+        1,
+        true,
+        false
+      ],
+      "passed": true
+    },
+    {
+      "case": "custom Y",
+      "pressed": 122,
+      "down": false,
+      "chat_open": false,
+      "expected": [
+        1,
+        false,
+        true
+      ],
+      "passed": true
+    },
+    {
+      "case": "custom Y",
+      "pressed": 121,
+      "down": true,
+      "chat_open": false,
+      "expected": [
+        0,
+        false,
+        false
+      ],
+      "passed": true
+    },
+    {
+      "case": "custom Y",
+      "pressed": 102,
+      "down": false,
+      "chat_open": false,
+      "expected": [
+        0,
+        false,
+        false
+      ],
+      "passed": true
+    },
+    {
+      "case": "custom Y",
+      "pressed": 121,
+      "down": false,
+      "chat_open": true,
+      "expected": [
+        0,
+        false,
+        false
+      ],
+      "passed": true
+    }
+  ],
+  "runtime_combat_rules_changed": false,
+  "real_engine_1_3_3_tested": false
+}

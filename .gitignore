@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.venv/
+dist/
+work/
+*.log
+.env
+.env.*
+cluster_token.txt
+mod.manifest
