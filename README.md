@@ -18,6 +18,8 @@
 
 ![群鸟冰柱剑气](docs/media/swordwave.png)
 
+[观看 1.3.5 实机演示（YouTube）](https://www.youtube.com/watch?v=vl9f-G49yRs)
+
 ## 目录与开发
 
 根目录的 `modinfo.lua`、`modmain.lua`、`scripts/`、`anim/`、`bigportraits/`、`images/`、`modicon.*`、`CREDITS.txt` 是运行文件。其他目录用于开发规则、记录及测试。
