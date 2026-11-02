@@ -5,7 +5,7 @@ local assets = {
     Asset("ANIM", "anim/hitsugayabankai.zip"),
     Asset("ANIM", "anim/ghost_hitsugaya_build.zip"),
 }
-local prefabs = { "hitsugayasword", "hitsugayarobe", "hitsugaya_ring_fx", "hitsugaya_swordwave_fx", "splash_snow_fx", "collapse_big" }
+local prefabs = { "hitsugayasword", "hitsugayarobe", "hitsugaya_ring_fx", "hitsugaya_swordwave_fx", "splash_snow_fx", "collapse_big", "hitsugaya_iceglacier" }
 
 local function common_postinit(inst)
     inst.MiniMapEntity:SetIcon("hitsugaya.tex")

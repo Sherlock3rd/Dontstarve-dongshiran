@@ -140,6 +140,7 @@ end
 for key, en in pairs(Strings.en) do
     if string.match(key, "^BANKAI_") or string.match(key, "^FREEZE_")
         or string.match(key, "^SOUL_UP_") or string.match(key, "^SOUL_DESC_")
+        or string.match(key, "^WAVE_")
         or key == "ROBE_CONFLICT" or key == "SOUL_FAIL"
         or key == "SWORD_INSPECT" or key == "ROBE_INSPECT" then
         L.RegisterPair(en, Strings.zh[key])

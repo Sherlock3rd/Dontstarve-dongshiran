@@ -1,4 +1,4 @@
--- Six-slot haori integration. Reuse native slot networking and container actions.
+-- Eight-slot haori integration. Reuse native slot networking and container actions.
 local M = { SLOT = "hitsugaya_robe" }
 local Localization = require("hitsugaya_localization")
 
@@ -116,11 +116,11 @@ end
 function M.Install(api)
     EQUIPSLOTS.HITSUGAYA_ROBE = M.SLOT
     local containers = require("containers")
-    local widget = { slotpos = {}, animbank = "ui_icepack_2x3",
-        animbuild = "ui_icepack_2x3", pos = Vector3(-5, -70, 0) }
-    for y = 0, 2 do
-        table.insert(widget.slotpos, Vector3(-162, -75 * y + 75, 0))
-        table.insert(widget.slotpos, Vector3(-87, -75 * y + 75, 0))
+    local widget = { slotpos = {}, animbank = "ui_backpack_2x4",
+        animbuild = "ui_backpack_2x4", pos = Vector3(-5, -80, 0) }
+    for y = 0, 3 do
+        table.insert(widget.slotpos, Vector3(-162, -75 * y + 114, 0))
+        table.insert(widget.slotpos, Vector3(-87, -75 * y + 114, 0))
     end
     containers.params.hitsugayarobe = {
         widget = widget, issidewidget = true, type = "pack", openlimit = 1,
@@ -128,7 +128,7 @@ function M.Install(api)
             return item ~= container.inst and not IsRobe(item) and not IsContainer(item)
         end,
     }
-    containers.MAXITEMSLOTS = math.max(containers.MAXITEMSLOTS, 6)
+    containers.MAXITEMSLOTS = math.max(containers.MAXITEMSLOTS, 8)
     api.AddComponentPostInit("inventory", M.PatchInventory)
     api.AddPrefabPostInit("inventory_classified", function(inst)
         if not TheWorld.ismastersim then M.PatchClassified(inst) end

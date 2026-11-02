@@ -6,11 +6,14 @@ local BANKAI_FLOOR = 20
 local MAINTENANCE = require("hitsugaya_soul_data").MAINTENANCE
 local CharacterFreeze = require("hitsugaya_freeze")
 local Localization = require("hitsugaya_localization")
-local NO_FREEZE_TAGS = { "FX", "NOCLICK", "DECOR", "INLIMBO", "player" }
+local AttackSpeed = require("hitsugaya_attackspeed")
+local Ice = require("hitsugaya_ice")
+local NO_FREEZE_TAGS = { "FX", "NOCLICK", "DECOR", "INLIMBO" }
 
 local function SpawnEffect(inst, name)
     local fx = SpawnPrefab(name)
     if fx ~= nil then fx.Transform:SetPosition(inst.Transform:GetWorldPosition()) end
+    return fx
 end
 
 local HitsugayaCompat = Class(function(self, inst)
@@ -20,6 +23,7 @@ local HitsugayaCompat = Class(function(self, inst)
     self.freeze_ready_time = 0
     self.last_request_time = -1
     self.base_overheat = inst.components.temperature.overheattemp
+    AttackSpeed.Attach(inst)
     self.ondeath = function() self:SetTransformed(false, true, true) end
     self.onrevive = function() self:SetTransformed(false, true) end
     self.onsanitydelta = function()
@@ -56,6 +60,7 @@ function HitsugayaCompat:SetTransformed(enabled, silent, skip_visual)
     self.has_transformed = self.has_transformed or enabled
     inst.transformed = enabled
     inst._hitsugaya_bankai:set(enabled)
+    AttackSpeed.SetBankai(inst, enabled)
     inst.components.combat.externaldamagemultipliers:SetModifier(inst, enabled and 1.5 or 1, MODIFIER)
     -- Keep the legacy post-transformation 1% absorption without clobbering other sources.
     inst.components.health.externalabsorbmodifiers:SetModifier(inst,
@@ -75,9 +80,10 @@ function HitsugayaCompat:SetTransformed(enabled, silent, skip_visual)
     inst:PushEvent("hitsugaya_bankai_changed", { transformed = enabled })
     if not silent then
         SpawnEffect(inst, "splash_snow_fx")
-        SpawnEffect(inst, "hitsugaya_ring_fx")
-        SpawnEffect(inst, "collapse_big")
-        inst.SoundEmitter:PlaySound("dontstarve_DLC001/creatures/bearger/groundpound")
+        if enabled then
+            SpawnEffect(inst, "collapse_big")
+            inst.SoundEmitter:PlaySound("dontstarve_DLC001/creatures/bearger/groundpound")
+        end
         Localization.Say(inst, enabled and "BANKAI_ON" or "BANKAI_OFF", 2.5, true)
     end
 end
@@ -117,7 +123,7 @@ function HitsugayaCompat:ToggleTransformed()
     return self.transformed
 end
 
-function HitsugayaCompat:Freeze(skip_cast_fx)
+function HitsugayaCompat:Freeze()
     if not self:IsAlive() or GetTime() < self.freeze_ready_time then return false end
     local inst = self.inst
     local cost = self:IsColdTerrain() and 8 or 10
@@ -128,17 +134,35 @@ function HitsugayaCompat:Freeze(skip_cast_fx)
     end
     self.freeze_ready_time = GetTime() + FREEZE_COOLDOWN
     inst.components.sanity:DoDelta(-cost)
-    -- Reuse the original ring for a successful standalone cast, even with no targets.
-    -- A combined transform/freeze request has already spawned this effect.
-    if not skip_cast_fx then SpawnEffect(inst, "hitsugaya_ring_fx") end
+    -- The ring identifies a successful Freeze cast, including legacy combined requests.
+    local radius = Ice.GetRadius(inst)
+    local ring = SpawnEffect(inst, "hitsugaya_ring_fx")
+    if ring ~= nil then ring.Transform:SetScale(radius / 16, radius / 16, radius / 16) end
     local x, y, z = inst.Transform:GetWorldPosition()
-    for _, target in ipairs(TheSim:FindEntities(x, y, z, 16, { "freezable" }, NO_FREEZE_TAGS)) do
-        if target:IsValid() and target.components.freezable ~= nil then
-            CharacterFreeze.Apply(target)
+    for _, target in ipairs(TheSim:FindEntities(x, y, z, radius, nil, NO_FREEZE_TAGS)) do
+        if target:IsValid() and target.components.freezable ~= nil
+            and not target:HasTag("player") and not target:HasTag("playerghost") then
+            CharacterFreeze.Apply(target, self.transformed)
+        end
+        if target:IsValid() then
+            local burnable = target.components.burnable
+            if burnable ~= nil and (burnable:IsBurning() or burnable:IsSmoldering()) then
+                burnable:Extinguish(true, -1)
+            end
         end
     end
+    Localization.Say(inst, "FREEZE_CAST", 2, true)
     inst.SoundEmitter:PlaySound("dontstarve/creatures/hound/icehound_explo", "explosion")
     self:ScheduleCooldownSound(FREEZE_COOLDOWN)
+    local ice = TheWorld.components.hitsugaya_iceworld
+    if ice ~= nil then
+        -- Production is optional; a placement/API failure must not abort combat Freeze.
+        local ok, err = pcall(ice.TryCreate, ice, inst)
+        if not ok and not ice.error_reported then
+            ice.error_reported = true
+            print("[Hitsugaya ice] Production skipped: " .. tostring(err))
+        end
+    end
     return true
 end
 
@@ -163,7 +187,7 @@ function HitsugayaCompat:Activate(transform, freeze)
     if now == self.last_request_time then return false end
     self.last_request_time = now
     local changed = transform and self:ToggleTransformed() or false
-    local cast = freeze and self:Freeze(changed) or false
+    local cast = freeze and self:Freeze() or false
     return changed or cast
 end
 
@@ -188,6 +212,7 @@ end
 
 function HitsugayaCompat:OnRemoveFromEntity()
     local inst = self.inst
+    AttackSpeed.SetBankai(inst, false)
     inst:StopUpdatingComponent(self)
     if self.onloadtask ~= nil then self.onloadtask:Cancel() end
     if self.cooldown_task ~= nil then self.cooldown_task:Cancel() end

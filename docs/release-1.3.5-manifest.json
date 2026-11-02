@@ -1,0 +1,331 @@
+{
+  "version": "1.3.5",
+  "workshop_id": "3831773235",
+  "files": [
+    {
+      "path": "CREDITS.txt",
+      "sha256": "79bef7f24c5912646835ee2ced18389aa281a74b3e355cb46c3e3f0743552955",
+      "bytes": 4218
+    },
+    {
+      "path": "anim/ghost_hitsugaya_build.zip",
+      "sha256": "faf8e5878f779813022ed0ceb5f7f8e2a496df87dc84fcb55b2b2ba8eef61f82",
+      "bytes": 1057939
+    },
+    {
+      "path": "anim/hitsugaya.zip",
+      "sha256": "93bb7f978976df57b6ef28c6abe00bd89a7716ad8ccaaafb6360f06f76d40b9c",
+      "bytes": 302152
+    },
+    {
+      "path": "anim/hitsugaya_ring_fx.zip",
+      "sha256": "923ef3a9b0720001d502cabef8da2ea83df5533ef273e4da14bb90dd6f565298",
+      "bytes": 76025
+    },
+    {
+      "path": "anim/hitsugaya_swordwave_fx.zip",
+      "sha256": "f8e7f432f79a5fa88256a66a8c2ac8dce770177cae5a92d4b9760df16dec71e0",
+      "bytes": 52645
+    },
+    {
+      "path": "anim/hitsugayabankai.zip",
+      "sha256": "f6e68826913c35c95442e636d4bc0dc9c805a8826591067810bcabc24b75aee9",
+      "bytes": 339645
+    },
+    {
+      "path": "anim/hitsugayarobe.zip",
+      "sha256": "081c178aed70ab7777589a34b0bd8b76bb9e8bcd0b18c68c62f9f361da79b706",
+      "bytes": 40427
+    },
+    {
+      "path": "anim/hitsugayasword.zip",
+      "sha256": "b983f257ac33736a32874ecd7eaee73bc027c59fedf464777bc00ee360b49665",
+      "bytes": 6336
+    },
+    {
+      "path": "anim/swap_hitsugayasword.zip",
+      "sha256": "1eecd78e3a976daae7fbc3475c51ed0ec147e790d9332254dce45aa96dcd7973",
+      "bytes": 5900
+    },
+    {
+      "path": "bigportraits/hitsugaya.tex",
+      "sha256": "da89f98ddce4426351a94af9b92e93b010e36d5d86c5b2708503d4d34919afb1",
+      "bytes": 1048594
+    },
+    {
+      "path": "bigportraits/hitsugaya.xml",
+      "sha256": "d37ae2a872f12360409b7026bb6d3a16478709bafed89a014ff8d8b759ab8c3c",
+      "bytes": 180
+    },
+    {
+      "path": "bigportraits/hitsugaya_none.tex",
+      "sha256": "83692d1334df1020502cbfc5571751b40073a59fc2f888c3639c6a6090ba9832",
+      "bytes": 524306
+    },
+    {
+      "path": "bigportraits/hitsugaya_none.xml",
+      "sha256": "86b7ad977938902eecbd9f69f161c578da643d52afaafcabff706f270b58d1aa",
+      "bytes": 193
+    },
+    {
+      "path": "images/avatars/avatar_ghost_hitsugaya.tex",
+      "sha256": "3c09df1b23347d2a416c9744faa1db6d55ed75bd360fe17751500840b828da36",
+      "bytes": 4114
+    },
+    {
+      "path": "images/avatars/avatar_ghost_hitsugaya.xml",
+      "sha256": "92d57339bccbc4721866bfc751a734d88963d488146eeeefffcd6ce57cb5b467",
+      "bytes": 190
+    },
+    {
+      "path": "images/avatars/avatar_hitsugaya.tex",
+      "sha256": "eb262655af192a6c984b704d1ace4ebc20aab4f720a8363e8bb757f561a97d53",
+      "bytes": 4114
+    },
+    {
+      "path": "images/avatars/avatar_hitsugaya.xml",
+      "sha256": "eaacd96efd05dd13f8907207d8c3c442d0720070037f30a3b97362dc3f6dcbac",
+      "bytes": 178
+    },
+    {
+      "path": "images/avatars/self_inspect_hitsugaya.tex",
+      "sha256": "eb262655af192a6c984b704d1ace4ebc20aab4f720a8363e8bb757f561a97d53",
+      "bytes": 4114
+    },
+    {
+      "path": "images/avatars/self_inspect_hitsugaya.xml",
+      "sha256": "5f1a62abee23251af260ed4cf90d387c9e4c16066a465632d88447da6b2fd1c8",
+      "bytes": 190
+    },
+    {
+      "path": "images/inventoryimages/hitsugayarobe.tex",
+      "sha256": "f26a9535348e99eb0d3f2f7e43c127300750431a246a73376c5f55b39fa338ef",
+      "bytes": 4114
+    },
+    {
+      "path": "images/inventoryimages/hitsugayarobe.xml",
+      "sha256": "0c56311077f24b202a6957f1dd0580d83260922d98c86a0c58b2014d6b507bff",
+      "bytes": 172
+    },
+    {
+      "path": "images/inventoryimages/hitsugayasword.tex",
+      "sha256": "5a10d197138c7da335fa965315b0bef9e2deb346d28aaea09a97990e549f5e29",
+      "bytes": 4114
+    },
+    {
+      "path": "images/inventoryimages/hitsugayasword.xml",
+      "sha256": "c7fba668f47375438a84d6a2fb5d516a2fbd8060ae18df32dad020e4dcaebf49",
+      "bytes": 174
+    },
+    {
+      "path": "images/map_icons/hitsugaya.tex",
+      "sha256": "eb262655af192a6c984b704d1ace4ebc20aab4f720a8363e8bb757f561a97d53",
+      "bytes": 4114
+    },
+    {
+      "path": "images/map_icons/hitsugaya.xml",
+      "sha256": "22029b8fd669973544b7c5b2ed02f12296f2dad758afb59386b2893f98448595",
+      "bytes": 164
+    },
+    {
+      "path": "images/names_hitsugaya.tex",
+      "sha256": "6b7f9b989f731609cbcd801cca72f8cd367a3844dc83ba3206b28769a8bf0516",
+      "bytes": 524306
+    },
+    {
+      "path": "images/names_hitsugaya.xml",
+      "sha256": "4311a4457fe6f39a57d76617aecb4a7109c7179150a685fbfaa2f03b90079fd7",
+      "bytes": 184
+    },
+    {
+      "path": "images/saveslot_portraits/hitsugaya.tex",
+      "sha256": "d4010f0da4c5c1c81f6b052835c9e24e70c433d366dc57f922d3ee6c418ec828",
+      "bytes": 16402
+    },
+    {
+      "path": "images/saveslot_portraits/hitsugaya.xml",
+      "sha256": "5546ec27c912e6da404038c9398f95ed07dbb66b696ee95f45255c0e114f5854",
+      "bytes": 168
+    },
+    {
+      "path": "images/selectscreen_portraits/hitsugaya.tex",
+      "sha256": "93e556573065a2b910ca84886ff0e458d7a32c3a29677217c19df4ae3ace85c7",
+      "bytes": 131090
+    },
+    {
+      "path": "images/selectscreen_portraits/hitsugaya.xml",
+      "sha256": "8c544700adc20f9e137d9bbceb6032a7f6a69cbb5f52e35fcd72475ca959cf2e",
+      "bytes": 174
+    },
+    {
+      "path": "images/selectscreen_portraits/hitsugaya_silho.tex",
+      "sha256": "5cfc2be4440d1b82471a62a214b74fa9a5fdaf0aff41f844681d32b1a99e55a2",
+      "bytes": 131090
+    },
+    {
+      "path": "images/selectscreen_portraits/hitsugaya_silho.xml",
+      "sha256": "7622d5237643417e94c9cb792654b6aca6232f4fac57786b2420b71f0fefb85f",
+      "bytes": 186
+    },
+    {
+      "path": "modicon.tex",
+      "sha256": "eb0aa37f625dd13c85566f349c3119bb985ff557f9fe0c4051a8f5377f00d08e",
+      "bytes": 16402
+    },
+    {
+      "path": "modicon.xml",
+      "sha256": "e1a3739c59f441e3bc2db7ef28509abaf971d9e4202c3de64ec30514ab3cfcb7",
+      "bytes": 164
+    },
+    {
+      "path": "modinfo.lua",
+      "sha256": "f678505108f6aa53daadf63183fbc959cbc74e46a523c51395563422ea8fc579",
+      "bytes": 8432
+    },
+    {
+      "path": "modmain.lua",
+      "sha256": "3870e0feca076b9d929fdc8d383e374a76f26cdf87c0a51f8a1dee82daabc7d4",
+      "bytes": 3578
+    },
+    {
+      "path": "scripts/components/chosenhitsugaya.lua",
+      "sha256": "62f7096d98234cf80fa752dc10fe60f0652dc97590ed240ac2a4ab4cc3705cc7",
+      "bytes": 2462
+    },
+    {
+      "path": "scripts/components/hitsugaya_affinity.lua",
+      "sha256": "ca4b51b67146b79ace7a7b8ab005079c3a6de30dc744e597b6377b499e349554",
+      "bytes": 6440
+    },
+    {
+      "path": "scripts/components/hitsugaya_compat.lua",
+      "sha256": "3e8ae0446b1858a44e48674106841eb8b4b9c6ab451df67dac47b8e1b09b7574",
+      "bytes": 10353
+    },
+    {
+      "path": "scripts/components/hitsugaya_iceworld.lua",
+      "sha256": "d9c15ad79dc55cb9d282a4f031e74533e781d757f09456bc6fada1c5e5096c8b",
+      "bytes": 10819
+    },
+    {
+      "path": "scripts/components/hitsugaya_rewards.lua",
+      "sha256": "21e79756c2d0e3bfafa2a439506aadad565191cb8ea963abd49a27a8c892e6d4",
+      "bytes": 7132
+    },
+    {
+      "path": "scripts/components/hitsugaya_slow.lua",
+      "sha256": "062b237956a3d9e2e130a27e0d09a058029ceff5e5cb2c5411a36794bd5bb5ce",
+      "bytes": 1432
+    },
+    {
+      "path": "scripts/components/hitsugaya_soul.lua",
+      "sha256": "bd4612d9f18ca238dbb7b5c9dd660a7fcf60c712186619479726939e34b924cd",
+      "bytes": 3280
+    },
+    {
+      "path": "scripts/components/hitsugaya_swordwave.lua",
+      "sha256": "d92ae427dc8334bd1aff6f1698df7b3662c9a44d370bf115d5fabd43209efd3d",
+      "bytes": 8012
+    },
+    {
+      "path": "scripts/hitsugaya_attackspeed.lua",
+      "sha256": "128dd8aa15d8f74c79cbe181fad4041da550e8fc32501a4acf38dc232d69eda2",
+      "bytes": 3028
+    },
+    {
+      "path": "scripts/hitsugaya_compat_input.lua",
+      "sha256": "0a6328a54d5e1223c05e3c2c4b8fef367cbd4fe7562a9878f2ceaadf47359167",
+      "bytes": 1507
+    },
+    {
+      "path": "scripts/hitsugaya_freeze.lua",
+      "sha256": "960bbbf729c559484bd255c6f68d01050428a801a5189859a56310a1f57f9fe7",
+      "bytes": 2506
+    },
+    {
+      "path": "scripts/hitsugaya_haunt.lua",
+      "sha256": "aebb36b1b53226b6f736bb7116ee1eedb1581fba532a7e9b31af55fb38373ddb",
+      "bytes": 1381
+    },
+    {
+      "path": "scripts/hitsugaya_ice.lua",
+      "sha256": "bcf205dd0a4b3e5379eb85a4fd3c37f3cc2ec1bf22490db8fe303f2764953a21",
+      "bytes": 4183
+    },
+    {
+      "path": "scripts/hitsugaya_localization.lua",
+      "sha256": "59d7d516f69bdc1073d1e63ffbec530fb28ebfa6ae53da62cb1432a89d6a7f62",
+      "bytes": 8709
+    },
+    {
+      "path": "scripts/hitsugaya_robe.lua",
+      "sha256": "749d7fb4c9a59a832ffbdd70bf94d1d8f14a246bf2daebacef6bcd73aac65a10",
+      "bytes": 6770
+    },
+    {
+      "path": "scripts/hitsugaya_soul_crafting.lua",
+      "sha256": "15db3db21e23995c5c3e45fdb77fe07fb1bf72c1676bc9db2a0e4ee9cb481b34",
+      "bytes": 6193
+    },
+    {
+      "path": "scripts/hitsugaya_soul_data.lua",
+      "sha256": "c70965823c8f1130c72b56b2376d54fa147141c4c205c603b8e28908985b0de0",
+      "bytes": 1022
+    },
+    {
+      "path": "scripts/hitsugaya_strings.lua",
+      "sha256": "0bde65fba2353a46965743b4e731ce420e8f5800025a2f39af7be0744dc0f34a",
+      "bytes": 6176
+    },
+    {
+      "path": "scripts/prefabs/hitsugaya.lua",
+      "sha256": "8e24710a9547f51b8b55e001c00d219980736a6ee31bfbb5fdca174d24eff3e9",
+      "bytes": 2274
+    },
+    {
+      "path": "scripts/prefabs/hitsugaya_iceglacier.lua",
+      "sha256": "a8d9da0c3eb48b2cb15216a3d975cddb74628e847eee25656d30c29a64359d11",
+      "bytes": 2728
+    },
+    {
+      "path": "scripts/prefabs/hitsugaya_none.lua",
+      "sha256": "8f77b36f7fc459d3315e97ead6bf0aaf901f861792d13576eab720ba1ddfa1bf",
+      "bytes": 700
+    },
+    {
+      "path": "scripts/prefabs/hitsugaya_ring_fx.lua",
+      "sha256": "96edc414f9b04fab7503b7de4dc0970e94bd58c52db29c0ea4af6a520f0e1a53",
+      "bytes": 1454
+    },
+    {
+      "path": "scripts/prefabs/hitsugaya_swordwave_fx.lua",
+      "sha256": "a063b13cd814a2656ca9ad075381cf480148f0b916243e0896c37a1c406edbd9",
+      "bytes": 859
+    },
+    {
+      "path": "scripts/prefabs/hitsugayarobe.lua",
+      "sha256": "55cc8606f9e0a4272ddf2240dcab818ae61d73758cd00dd9360670e4d7da71b9",
+      "bytes": 3967
+    },
+    {
+      "path": "scripts/prefabs/hitsugayasword.lua",
+      "sha256": "dbe69d2a0e280c5300f012186eb880566f677841ceb7fa3b20c9c630f1c91a1c",
+      "bytes": 3779
+    },
+    {
+      "path": "scripts/speech_hitsugaya.lua",
+      "sha256": "2b108b694334b03f17975f29c227594e44d58462cec4cd2185fabec16285efe6",
+      "bytes": 1701
+    },
+    {
+      "path": "scripts/speech_hitsugaya_en.lua",
+      "sha256": "9d74b47b136dda63e1b5d6f9af3147e913dc862d845b9fa03a97c6a874b08f94",
+      "bytes": 16108
+    },
+    {
+      "path": "scripts/speech_hitsugaya_zh.lua",
+      "sha256": "4165dd47f8546e0c3d5d0e524f237072e2e946d1fb3b6c62496e3d3ea6a922f2",
+      "bytes": 15416
+    }
+  ]
+}

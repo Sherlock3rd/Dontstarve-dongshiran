@@ -1,4 +1,5 @@
 local SpDamageUtil = require("components/spdamageutil")
+local Localization = require("hitsugaya_localization")
 local EXCLUDE = { "INLIMBO", "FX", "NOCLICK", "DECOR", "player", "playerghost", "wall", "structure", "companion", "notarget" }
 local COS_HALF = math.cos(PI / 4)
 
@@ -20,10 +21,10 @@ end
 local function ClearPath(x, z, target)
     local tx, _, tz = target.Transform:GetWorldPosition()
     if not TheWorld.Pathfinder:IsClear(x, 0, z, tx, 0, tz, { ignorewalls = false, ignorecreep = true, allowocean = false }) then return false end
-    local platform = TheWorld.Map:GetPlatformAtPoint(x, 0, z)
+    local platform = TheWorld.Map:GetPlatformAtPoint(x, z)
     for i = 0, 16 do
         local px, pz = x + (tx - x) * i / 16, z + (tz - z) * i / 16
-        if TheWorld.Map:GetPlatformAtPoint(px, 0, pz) ~= platform then return false end
+        if TheWorld.Map:GetPlatformAtPoint(px, pz) ~= platform then return false end
         if platform == nil and not TheWorld.Map:IsPassableAtPoint(px, 0, pz) then return false end
     end
     return true
@@ -84,7 +85,7 @@ function SwordWave:OnHit(data)
     local now = GetTime()
     self.count = now - self.last_hit <= 3 and self.count + 1 or 1
     self.last_hit = now
-    if self.count < 3 then return end
+    if self.count < 2 then return end
     self.count = 0
     -- Finish the original hit (including death/reflect callbacks) before the wave.
     self.wavetask = self.inst:DoTaskInTime(0, function()
@@ -100,8 +101,9 @@ end
 function SwordWave:Release(p)
     local inst = self.inst
     local bankai = inst.components.hitsugaya_compat.transformed
-    local radius = bankai and 5 or 4
+    local radius = bankai and 8 or 4
     local slow = bankai and 0.55 or 0.7
+    Localization.Say(inst, "WAVE_CAST", 1.5, true)
     local fx = SpawnPrefab("hitsugaya_swordwave_fx")
     if fx ~= nil then
         fx.Transform:SetPosition(p.x, 0, p.z)

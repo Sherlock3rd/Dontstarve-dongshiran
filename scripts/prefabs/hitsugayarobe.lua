@@ -1,7 +1,7 @@
 local Robe = require("hitsugaya_robe")
 local assets = {
     Asset("ANIM", "anim/hitsugayarobe.zip"),
-    Asset("ANIM", "anim/ui_icepack_2x3.zip"),
+    Asset("ANIM", "anim/ui_backpack_2x4.zip"),
     Asset("ATLAS", "images/inventoryimages/hitsugayarobe.xml"),
     Asset("IMAGE", "images/inventoryimages/hitsugayarobe.tex"),
 }
@@ -91,6 +91,8 @@ local function fn()
 
     inst:AddComponent("container")
     inst.components.container:WidgetSetup("hitsugayarobe")
+    inst:AddComponent("preserver")
+    inst.components.preserver:SetPerishRateMultiplier(0.1)
     MakeHauntableLaunch(inst)
     return inst
 end

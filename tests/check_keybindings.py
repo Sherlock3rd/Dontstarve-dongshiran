@@ -15,6 +15,7 @@ for p in dest.rglob('*.lua'):
 metadata = lua.eval('''function(src, locale)
  local env={folder_name='workshop-3831773235',locale=locale,ChooseTranslationTable=function(t) return t[locale] or t[1] end}
  local f=assert(loadstring(src));setfenv(f,env);f()
+ assert(env.forcemanifest==false)
  local option=env.configuration_options[1]
  assert(option.default==120 and #option.options==90)
  for i=1,#option.options do assert(option.options[i].data~=122) end
@@ -22,7 +23,7 @@ metadata = lua.eval('''function(src, locale)
 end''')
 results = []
 for locale in ['en','zh','zht','schinese']:
-    assert metadata(info.read_text(encoding='utf-8'),locale)=='1.3.3'
+    assert metadata(info.read_text(encoding='utf-8'),locale)=='1.3.5'
     results.append({'case':'native modinfo sandbox '+locale,'passed':True})
 
 # Execute the actual configuration block and actual input module against narrow input mocks.
