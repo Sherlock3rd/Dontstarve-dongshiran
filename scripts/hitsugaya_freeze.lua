@@ -1,4 +1,9 @@
 -- Instance-local adapter: never change default wearofftime or other cold sources.
+local function Pack(...) return { n = select("#", ...), ... } end
+local function Result(result)
+    if not result[1] then error(result[2], 0) end
+    return unpack(result, 2, result.n)
+end
 local function Install(freezable)
     if freezable._hitsugaya_adapter then return end
     freezable._hitsugaya_adapter = true
@@ -15,20 +20,20 @@ local function Install(freezable)
         self._hitsugaya_half = self._hitsugaya_cast == true
         self._hitsugaya_duration = self._hitsugaya_half and self._hitsugaya_cast_duration or nil
         self._hitsugaya_phase = true
-        local result = freeze(self, duration, ...)
+        local result = Pack(pcall(freeze, self, duration, ...))
         self._hitsugaya_phase = oldphase
         -- Invisible/dead targets may reject Freeze without starting a new timer.
-        if self.wearofftask == oldtask then
+        if not result[1] or self.wearofftask == oldtask then
             self._hitsugaya_half, self._hitsugaya_duration = oldhalf, oldduration
         end
-        return result
+        return Result(result)
     end
     freezable.Thaw = function(self, duration, ...)
         local oldphase = self._hitsugaya_phase
         self._hitsugaya_phase = true
-        local result = thaw(self, duration, ...)
+        local result = Pack(pcall(thaw, self, duration, ...))
         self._hitsugaya_phase = oldphase
-        return result
+        return Result(result)
     end
 end
 
@@ -39,8 +44,9 @@ local function ApplyWithDuration(target, duration)
     local previous, previousduration = freezable._hitsugaya_cast, freezable._hitsugaya_cast_duration
     freezable._hitsugaya_cast = true
     freezable._hitsugaya_cast_duration = duration
-    freezable:AddColdness(4, duration or 7)
+    local result = Pack(pcall(freezable.AddColdness, freezable, 4, duration or 7))
     freezable._hitsugaya_cast, freezable._hitsugaya_cast_duration = previous, previousduration
+    Result(result)
 end
 
 return {

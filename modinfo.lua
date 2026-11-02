@@ -7,7 +7,7 @@ description = chinese
     and "护廷十三队十番队队长，以冰轮丸迎战永恒领域。以理智维持卍解，借寒地与冷食调息；循序强化斩魄刀，身披八格防腐队长羽织。\n请勿与原版创意工坊人物（736626219）同时启用。"
     or "The captain of Squad Ten brings Hyorinmaru to the Constant. Sustain Bankai with sanity, draw strength from snowy ground and chilled food, strengthen your Zanpakuto, and carry supplies in an eight-pocket preserving haori.\nDisable the original Workshop character (736626219) before enabling."
 author = "Silhh and Arcade"
-version = "1.3.5"
+version = "1.3.6"
 
 -- Native development support: newly added files must not use a stale Workshop index.
 forcemanifest = false

@@ -1,6 +1,8 @@
 # 冬狮郎 · 冰轮丸（Don't Starve Together）
 
-当前版本：**1.3.5**，对应 [Steam 创意工坊条目 3831773235](https://steamcommunity.com/sharedfiles/filedetails/?id=3831773235)。[完整玩法说明与强化配方](docs/workshop-description-zh.txt)。服务器和所有客户端均需启用本版，请停用原版 Workshop 736626219，避免同时加载。
+当前版本：**1.3.6**，对应 [Steam 创意工坊条目 3831773235](https://steamcommunity.com/sharedfiles/filedetails/?id=3831773235)。[完整玩法说明与强化配方](docs/workshop-description-zh.txt)。服务器和所有客户端均需启用本版，请停用原版 Workshop 736626219，避免同时加载。
+
+[1.3.6 更新说明](docs/release-1.3.6.md)：修复额外装备栏下羽织取料与背包互斥，并加强冻结、强化异常恢复。技能数值不变。
 
 本仓库从已发布、下载回读并核对的 Mod 包建立，用于继续开发。它不是原开发仓库的完整恢复：原提交历史、原 UT、资源生成脚本和可编辑美术源文件尚未取得。运行文件的原有署名和说明保留在 [CREDITS.txt](CREDITS.txt)，没有另行声明新的授权协议。
 
@@ -24,7 +26,7 @@
 
 根目录的 `modinfo.lua`、`modmain.lua`、`scripts/`、`anim/`、`bigportraits/`、`images/`、`modicon.*`、`CREDITS.txt` 是运行文件。其他目录用于开发规则、记录及测试。
 
-- [1.3.5 发布文件清单及 SHA-256](docs/release-1.3.5-manifest.json)：65 个运行文件；原导入清单仍保留。
+- [1.3.6 发布文件清单及 SHA-256](docs/release-1.3.6-manifest.json)：65 个运行文件；历史发布清单仍保留。
 - [能力实现说明](docs/abilities-1.3.5.md)及[制冰说明](docs/ice-generation.md)。
 - [验证范围与已知限制](docs/validation.md)。
 - [开发规则](rules/rules.md)。

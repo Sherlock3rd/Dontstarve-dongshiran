@@ -10,7 +10,8 @@ main = dest / "modmain.lua"
 lua = LuaRuntime(register_eval=False, register_builtins=False, max_memory=32*1024*1024)
 lua.execute('python=nil; io=nil; os=nil; package=nil; dofile=nil; loadfile=nil')
 compile_lua = lua.eval('function(s,n) return assert(loadstring(s,n)) end')
-for p in dest.rglob('*.lua'):
+runtime_and_tests = [info, main] + list((dest / 'scripts').rglob('*.lua')) + list((dest / 'tests').glob('*.lua'))
+for p in runtime_and_tests:
     compile_lua(p.read_text(encoding='utf-8-sig'), '@'+p.relative_to(dest).as_posix())
 metadata = lua.eval('''function(src, locale)
  local env={folder_name='workshop-3831773235',locale=locale,ChooseTranslationTable=function(t) return t[locale] or t[1] end}
@@ -23,7 +24,7 @@ metadata = lua.eval('''function(src, locale)
 end''')
 results = []
 for locale in ['en','zh','zht','schinese']:
-    assert metadata(info.read_text(encoding='utf-8'),locale)=='1.3.5'
+    assert metadata(info.read_text(encoding='utf-8'),locale)=='1.3.6'
     results.append({'case':'native modinfo sandbox '+locale,'passed':True})
 
 # Execute the actual configuration block and actual input module against narrow input mocks.
@@ -47,4 +48,4 @@ for label, saved, expected in [('missing',None,120),('legacy Z',122,120),('X',12
     for pressed,down,blocked,want in [(expected,False,False,(1,True,False)),(122,False,False,(1,False,True)),(expected,True,False,(0,False,False)),(102,False,False,(0,False,False)),(expected,False,True,(0,False,False))]:
         actual=test_input(src,key,pressed,down,blocked);assert actual==want,(label,pressed,actual,want)
         results.append({'case':label,'pressed':pressed,'down':down,'chat_open':blocked,'expected':want,'passed':True})
-print(json.dumps({"compiled": len(list(dest.rglob("*.lua"))), "passed": len(results)}))
+print(json.dumps({"compiled": len(runtime_and_tests), "passed": len(results)}))

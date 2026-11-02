@@ -61,7 +61,10 @@ function M.DoBuild(builder, recname, pt, rotation, skin)
         soul.upgrading = nil
         error(err)
     end
-    soul:FinishUpgrade(builder.inst)
+    local completed, result = pcall(soul.FinishUpgrade, soul, builder.inst)
+    soul.upgrading = nil
+    if not completed then error(result, 0) end
+    if not result then return false, "HITSUGAYA_SOUL" end
     builder.inst:PushEvent("refreshcrafting")
     return true
 end

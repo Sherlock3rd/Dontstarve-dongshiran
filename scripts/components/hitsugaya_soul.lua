@@ -34,10 +34,11 @@ function Soul:RefreshDamage()
         and owner.components.hitsugaya_compat ~= nil and owner.components.hitsugaya_compat.transformed
     inst.components.planardamage:SetBaseDamage(self.stage == 4 and (bankai and 54 or 36) or 0)
     inst._hitsugaya_soul_stage:set(self.stage)
+    self.refresh_pending = nil
 end
 
 function Soul:CanUpgrade(doer, expectedstage)
-    if self.upgrading or self.stage >= 4 or self.stage ~= expectedstage then return false end
+    if self.upgrading then return false end
     if doer == nil or not doer:IsValid() or doer.prefab ~= "hitsugaya"
         or doer:HasTag("playerghost") or doer:HasTag("corpse")
         or doer.components.health == nil or doer.components.health:IsDead()
@@ -45,6 +46,15 @@ function Soul:CanUpgrade(doer, expectedstage)
         or doer.components.inventory:GetEquippedItem(EQUIPSLOTS.HANDS) ~= self.inst
         or self.inst.components.inventoryitem:GetGrandOwner() ~= doer
         or (doer.components.rider ~= nil and doer.components.rider:IsRiding()) then return false end
+    if self.refresh_pending then
+        -- A paid stage is authoritative. Retry only its derived properties,
+        -- never payment or the stage increment. Guard reentrant mod callbacks.
+        self.upgrading = true
+        local ok = pcall(self.RefreshDamage, self)
+        self.upgrading = nil
+        if not ok then return false end
+    end
+    if self.stage >= 4 or self.stage ~= expectedstage then return false end
     return true
 end
 
@@ -53,8 +63,10 @@ end
 function Soul:FinishUpgrade(doer)
     if not self.upgrading or self.stage >= 4 then return false end
     self.stage = self.stage + 1
-    self:RefreshDamage()
+    self.refresh_pending = true
+    local ok, err = pcall(self.RefreshDamage, self)
     self.upgrading = nil
+    if not ok then error(err, 0) end
     doer:PushEvent("hitsugaya_soul_changed", { item = self.inst, stage = self.stage })
     Localization.Say(doer, "SOUL_UP_" .. self.stage)
     return true

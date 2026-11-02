@@ -16,12 +16,29 @@ local function IsContainer(item)
     return item ~= nil and (item.components.container ~= nil or item.replica.container ~= nil)
 end
 
+local function IsBackpack(item)
+    if not IsContainer(item) or IsRobe(item) then return false end
+    local slot = EquipSlot(item)
+    local container = item.components.container or item.replica.container
+    -- Preserve BODY-container exclusion and recognize bags moved by slot mods.
+    -- A non-container armor piece or an unrelated accessory remains compatible.
+    return slot ~= nil and (slot == EQUIPSLOTS.BODY
+        or slot == EQUIPSLOTS.BACK or slot == EQUIPSLOTS.BELLY
+        or container.type == "pack" or item:HasTag("backpack"))
+end
+
 function M.Conflicts(inventory, item)
     local slot = EquipSlot(item)
     if slot == M.SLOT then
-        return not IsRobe(item) or IsContainer(inventory:GetEquippedItem(EQUIPSLOTS.BODY))
+        if not IsRobe(item) then return true end
+        for _, equippedslot in pairs(EQUIPSLOTS) do
+            if equippedslot ~= M.SLOT and IsBackpack(inventory:GetEquippedItem(equippedslot)) then
+                return true
+            end
+        end
+        return false
     end
-    return slot == EQUIPSLOTS.BODY and IsContainer(item)
+    return IsBackpack(item)
         and IsRobe(inventory:GetEquippedItem(M.SLOT))
 end
 
@@ -68,38 +85,64 @@ end
 -- Replace that shared function cell, never any equip-slot or item data. This
 -- extends crafting, quick transfer and controller prediction along with UI.
 local classified_overflows = setmetatable({}, { __mode = "k" })
-function M.PatchClassified(inst)
-    if inst._hitsugaya_robe_patched or inst.GetOverflowContainer == nil then return end
-    local old = inst.GetOverflowContainer
-    local classified_overflow = classified_overflows[old]
-    if classified_overflow == nil then
-        local replacement = function(classified)
-            local native = old(classified)
+local function ExtendOverflow(old)
+    local replacement = classified_overflows[old]
+    if replacement == nil then
+        replacement = function(classified, ...)
+            local native = old(classified, ...)
             if native ~= nil or classified.ignoreoverflow then return native end
             local robe = classified:GetEquippedItem(M.SLOT)
-            return IsRobe(robe) and robe.replica.container or nil
+            local container = IsRobe(robe) and robe.replica.container or nil
+            return container ~= nil and (container.CanBeOpened == nil or container:CanBeOpened()) and container or nil
         end
-        local count = 0
-        for _, fn in pairs(inst) do
-            if type(fn) == "function" then
-                local i = 1
-                while true do
-                    local name, value = debug.getupvalue(fn, i)
-                    if name == nil then break end
-                    if name == "GetOverflowContainer" and value == old then
-                        debug.setupvalue(fn, i, replacement)
-                        count = count + 1
-                    end
-                    i = i + 1
-                end
-            end
-        end
-        assert(count > 0, "Hitsugaya haori: native inventory prediction layout changed")
-        classified_overflow = replacement
         classified_overflows[old] = replacement
         classified_overflows[replacement] = replacement
     end
-    inst.GetOverflowContainer = classified_overflow
+    return replacement
+end
+
+function M.PatchClassified(inst)
+    if inst._hitsugaya_robe_patched then return true end
+    if type(inst.GetOverflowContainer) ~= "function" then return false end
+    -- Discover before changing shared cells. Public methods may be wrapped by
+    -- other mods; named native helpers inside their closures remain usable.
+    -- Never traverse tables/globals or descend into our own replacements.
+    local cells, visited, functions, supported, exhausted = {}, {}, 0, false, false
+    local function Visit(fn, depth)
+        if visited[fn] then return end
+        visited[fn] = true
+        if classified_overflows[fn] == fn then supported = true; return end
+        functions = functions + 1
+        if depth > 8 or functions > 512 then exhausted = true; return end
+        for i = 1, 256 do
+            local name, value = debug.getupvalue(fn, i)
+            if name == nil then return end
+            if type(value) == "function" then
+                if name == "GetOverflowContainer" then
+                    cells[#cells + 1] = { fn, i, value }
+                    supported = true
+                else
+                    Visit(value, depth + 1)
+                end
+            end
+        end
+        exhausted = true
+    end
+    for _, fn in pairs(inst) do if type(fn) == "function" then Visit(fn, 0) end end
+    if not supported or exhausted then
+        -- Unknown prediction layout: do not crash every survivor or partially
+        -- patch it. Existing bags stay owned; native interaction stays intact.
+        if not inst._hitsugaya_robe_prediction_unavailable then
+            print("[Hitsugaya] Haori prediction unavailable; keep native inventory. Move crafting materials to main inventory; haori equip prediction disabled.")
+        end
+        inst._hitsugaya_robe_prediction_unavailable = true
+        return false
+    end
+    for _, cell in ipairs(cells) do
+        debug.setupvalue(cell[1], cell[2], ExtendOverflow(cell[3]))
+    end
+    inst.GetOverflowContainer = ExtendOverflow(inst.GetOverflowContainer)
+    inst._hitsugaya_robe_prediction_unavailable = nil
     inst._hitsugaya_robe_patched = true
     for _, name in ipairs({ "EquipActiveItem", "SwapEquipWithActiveItem", "EquipActionItem" }) do
         local original = inst[name]
@@ -111,6 +154,7 @@ function M.PatchClassified(inst)
             end
         end
     end
+    return true
 end
 
 function M.Install(api)
@@ -129,14 +173,21 @@ function M.Install(api)
         end,
     }
     containers.MAXITEMSLOTS = math.max(containers.MAXITEMSLOTS, 8)
-    api.AddComponentPostInit("inventory", M.PatchInventory)
-    api.AddPrefabPostInit("inventory_classified", function(inst)
-        if not TheWorld.ismastersim then M.PatchClassified(inst) end
+    -- Native spawning runs Any hooks after component and named prefab hooks.
+    -- Extend the final inventory/slot-mod methods, before returning the entity
+    -- to SpawnSaveRecord/OnLoad. No deferred frame with unpatched saved gear.
+    api.AddPrefabPostInitAny(function(inst)
+        if inst.components.inventory ~= nil then M.PatchInventory(inst.components.inventory) end
+        if inst.prefab == "inventory_classified" and not TheWorld.ismastersim then
+            M.PatchClassified(inst)
+        end
     end)
     api.AddClassPostConstruct("components/equippable_replica", function(self)
         local old = self.IsRestricted
         self.IsRestricted = function(component, owner, ...)
             local inventory = owner ~= nil and owner.replica.inventory or nil
+            if IsRobe(component.inst) and inventory ~= nil and inventory.classified ~= nil
+                and inventory.classified._hitsugaya_robe_prediction_unavailable then return true end
             return inventory ~= nil and M.Conflicts(inventory, component.inst)
                 or old(component, owner, ...)
         end
